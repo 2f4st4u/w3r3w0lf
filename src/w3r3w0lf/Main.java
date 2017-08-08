@@ -23,10 +23,24 @@ public static void main(String[] args) throws IOException
 			String input = scan.nextLine();
 			if (input.equalsIgnoreCase("stop"))
 			{
-				
 				lobbyManager.StopListening();
 				System.out.print("Stopped Server!\n");
 				System.exit(0);
+			}
+			else if (input.equalsIgnoreCase("list"))
+			{
+				for (Iterator<LobbyClient> i = lobbyManager.connectedClients.iterator(); i.hasNext();)
+				{
+					LobbyClient client = i.next();
+					if (client.isConnected())
+					{
+						System.out.print(client.playerName + ": connected\n");
+					}
+					else 
+					{
+						System.out.print(client.playerName + ": disconnected\n");
+					}
+				}
 			}
 		}
 	}
@@ -42,6 +56,10 @@ public static void main(String[] args) throws IOException
 		
 		Client player = new Client();
 		player.Connect(ip, port, name);
+		new Thread(player).start();
+		scan.nextLine();
+		scan.close();
+		System.exit(0);
 	}
 	scan.close();
 	System.exit(0);
