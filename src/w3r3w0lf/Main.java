@@ -10,7 +10,6 @@ public class Main {
 public static void main(String[] args) throws IOException
 {
 	Scanner scan = new Scanner(System.in);
-	
 	System.out.print("Do you want to host or join?\n");
 	String answer = scan.nextLine();
 	if (answer.equalsIgnoreCase("host"))
