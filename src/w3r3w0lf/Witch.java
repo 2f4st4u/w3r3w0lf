@@ -13,12 +13,20 @@ public class Witch extends Player {
 		SendMessage("witch;WantToKill");
 		String witchKillResponse = GetMessage();
 		if (witchKillResponse.equals("yes")) {
-			SendMessage("witch;selectTarget");
+			SendMessage("witch;selectKillTarget");
 			String response = GetMessage();
 			if (!manager.PlayerExists(response)) {
 				return;
 			}
 		}
-
+		SendMessage("witch;WantToHeal");
+		String witchHealResponse = GetMessage();
+		if (witchHealResponse.equals("yes")) {
+			SendMessage("witch;selectHealTarget");
+			String response = GetMessage();
+			if (!manager.PlayerExists(response)) {
+				return;
+			}
+		}
 	}
 }

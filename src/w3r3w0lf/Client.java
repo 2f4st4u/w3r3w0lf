@@ -65,6 +65,10 @@ public class Client implements Runnable {
 		{
 			ProcessWerewolf(msg.replaceFirst("werewolf;", ""));
 		}
+		if (msg.startsWith("witch;") && role == Player.PlayerRole.witch)
+		{
+			ProcessWitch(msg.replaceFirst("witch;", ""));
+		}
 	}
 	
 	private void ProcessWerewolf(String msg)
@@ -78,7 +82,26 @@ public class Client implements Runnable {
 			SendMessage(person);
 		}
 	}
-
+	
+	private void ProcessWitch(String msg)
+	{
+		if (msg.equals("selectKillTarget"))
+		{
+			System.out.print("Select a person to kill:\n");
+			Scanner scan = new Scanner(System.in);
+			String person = scan.nextLine();
+			scan.close();
+			SendMessage(person);
+		}
+		else if (msg.equals("selectHealTarget"))
+		{
+			System.out.print("Select a person to heal:\n");
+			Scanner scan = new Scanner(System.in);
+			String person = scan.nextLine();
+			scan.close();
+			SendMessage(person);
+		}
+	}
 	@Override
 	public void run() {
 		while (true) 
