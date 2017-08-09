@@ -42,6 +42,10 @@ public class Client implements Runnable {
 		{
 			SendMessage("pong");
 		}
+		else if (msg.equals("serverstop"))
+		{
+			System.out.print("Server was stopped!");
+		}
 	}
 
 	@Override

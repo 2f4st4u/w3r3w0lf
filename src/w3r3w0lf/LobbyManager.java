@@ -34,7 +34,19 @@ public class LobbyManager {
 		{
 			return;
 		}
-		
 		listener.Stop();
+	}
+	
+	public void CloseServer()
+	{
+		StopListening();
+		for (Iterator<LobbyClient> i = connectedClients.iterator(); i.hasNext();)
+		{
+			LobbyClient client = i.next();
+			client.SendMessage("serverstop");
+			try {
+				client.playerSocket.close();
+			} catch (IOException e) {}
+		}
 	}
 }

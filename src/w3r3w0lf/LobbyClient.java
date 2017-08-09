@@ -32,4 +32,13 @@ public class LobbyClient {
 			return false;
 		}
 	}
+	
+	public void SendMessage(String msg)
+	{
+		try {
+			new DataOutputStream(playerSocket.getOutputStream()).writeBytes(msg + "\n");
+		} catch (IOException e) {
+			return;
+		}
+	}
 }

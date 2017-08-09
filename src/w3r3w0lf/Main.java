@@ -23,7 +23,7 @@ public static void main(String[] args) throws IOException
 			String input = scan.nextLine();
 			if (input.equalsIgnoreCase("stop"))
 			{
-				lobbyManager.StopListening();
+				lobbyManager.CloseServer();
 				System.out.print("Stopped Server!\n");
 				System.exit(0);
 			}
