@@ -46,11 +46,19 @@ public class Client implements Runnable {
 		}
 		else if (msg.equals("serverstop"))
 		{
-			System.out.print("Server was stopped!\n");
+			OnServerStop();
 		}
 		else if (msg.equals("startgame")) 
 		{
-			System.out.print("Game was started!\n");
+			OnStartGame();
+		}
+		else if (msg.startsWith("role;"))
+		{
+			OnRoleAssign(Player.PlayerRole.valueOf(msg.replaceFirst("role;", "")));
+		}
+		else if (msg.equals("killed"))
+		{
+			OnKilled();
 		}
 		
 		if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf)
@@ -90,5 +98,26 @@ public class Client implements Runnable {
 			}
 			
 		}
+	}
+
+	private void OnServerStop()
+	{
+		System.out.print("Server started!\n");
+	}
+	
+	private void OnStartGame()
+	{
+		System.out.print("Game started!\n");
+	}
+	
+	private void OnRoleAssign(Player.PlayerRole role)
+	{
+		this.role = role;
+		System.out.print("You are: " + role + "\n");
+	}
+	
+	private void OnKilled()
+	{
+		System.out.print("You were killed!\n");
 	}
 }

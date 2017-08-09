@@ -29,7 +29,10 @@ public static void main(String[] args) throws IOException
 			}
 			else if (input.equalsIgnoreCase("start"))
 			{
-				lobbyManager.StartGame();
+				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
+				roles.add(Player.PlayerRole.werewolf);
+				roles.add(Player.PlayerRole.werewolf);
+				lobbyManager.StartGame(roles);
 			}
 			else if (input.equalsIgnoreCase("list"))
 			{

@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.*;
 import java.util.*;
 
+import w3r3w0lf.Player.PlayerRole;
+
 public class LobbyManager {
 	public List<LobbyClient> connectedClients;
 	public ServerSocket serverSocket;
 	private LobbyListener listener;
+	private GameManager manager;
 	
 	public void Initialize(int port) throws IOException
 	{
@@ -50,15 +53,16 @@ public class LobbyManager {
 		}
 	}
 	
-	public void StartGame()
+	public void StartGame(List<PlayerRole> roles)
 	{
 		for (Iterator<LobbyClient> i = connectedClients.iterator(); i.hasNext();)
 		{
 			LobbyClient client = i.next();
 			client.SendMessage("startgame");
-			try {
-				client.playerSocket.close();
-			} catch (IOException e) {}
 		}
+		
+		manager = new GameManager();
+		manager.Initialize(connectedClients, roles);
+		manager.StartGame();
 	}
 }

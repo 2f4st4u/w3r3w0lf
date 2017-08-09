@@ -10,6 +10,11 @@ public class Werewolf extends Player {
 	
 	@Override
 	public void TurnStart() {
+		if (!isAlive)
+		{
+			return;
+		}
+		
 		SendMessage("werewolf;selectTarget");
 		String response = GetMessage();
 		if (!manager.PlayerExists(response))

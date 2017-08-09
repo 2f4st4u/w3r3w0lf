@@ -6,10 +6,11 @@ import w3r3w0lf.Player.PlayerRole;
 public class GameManager {
 	List<PlayerRole> availableRoles;
 	List<Player> players;
+	int round = 0;
 	
 	public void Initialize(List<LobbyClient> clients, List<PlayerRole> roles)
 	{
-		availableRoles = new ArrayList<PlayerRole>();
+		availableRoles = roles;
 		players = new ArrayList<Player>();
 		Random rand = new Random();
 		
@@ -43,11 +44,44 @@ public class GameManager {
 		}
 	}
 	
+	public void StartGame()
+	{
+		for(Player player : players)
+		{
+			player.SendMessage("role;" + player.role);
+		}
+		
+		NextRound();
+	}
+	
+	private void NextRound()
+	{
+		round++;
+		
+		//List<Thread> threadList = new ArrayList<Thread>();
+		for (Player ply : GetPlayersByRole(Player.PlayerRole.werewolf))
+		{
+			Werewolf werewolf = (Werewolf)ply;
+			werewolf.TurnStart();
+			//Thread th = new Thread(werewolf);
+			//th.run();
+			//threadList.add(th);
+		}
+		/*for (Thread th : threadList)
+		{
+			try {
+				th.join(60000);
+			} catch (InterruptedException e) {}
+		}*/
+		
+		
+	}
+	
 	public void Broadcast(String msg)
 	{
-		for (Iterator<Player> i = players.iterator(); i.hasNext();)
+		for(Player player : players)
 		{
-			i.next().SendMessage(msg);
+			player.SendMessage(msg);
 		}
 	}
 	
@@ -97,5 +131,19 @@ public class GameManager {
 		}
 		
 		ply.Killed();
+	}
+	
+	public List<Player> GetPlayersByRole(PlayerRole role)
+	{
+		List<Player> returnList = new ArrayList<Player>();
+		for(Player player : players)
+		{
+			if (player.role == role)
+			{
+				returnList.add(player);
+			}
+		}
+		
+		return returnList;
 	}
 }
