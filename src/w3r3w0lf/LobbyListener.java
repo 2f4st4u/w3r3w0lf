@@ -13,7 +13,7 @@ public class LobbyListener implements Runnable {
 		{
 			try {
 				Socket client = manager.serverSocket.accept();
-				client.setSoTimeout(2000);
+				//client.setSoTimeout(2000);
 				System.out.print("Client connected!\n");
 				String name = new BufferedReader(new InputStreamReader(client.getInputStream())).readLine();
 				System.out.print("Name: " + name + "\n");

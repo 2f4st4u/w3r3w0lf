@@ -49,4 +49,16 @@ public class LobbyManager {
 			} catch (IOException e) {}
 		}
 	}
+	
+	public void StartGame()
+	{
+		for (Iterator<LobbyClient> i = connectedClients.iterator(); i.hasNext();)
+		{
+			LobbyClient client = i.next();
+			client.SendMessage("startgame");
+			try {
+				client.playerSocket.close();
+			} catch (IOException e) {}
+		}
+	}
 }

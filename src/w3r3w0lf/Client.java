@@ -44,7 +44,11 @@ public class Client implements Runnable {
 		}
 		else if (msg.equals("serverstop"))
 		{
-			System.out.print("Server was stopped!");
+			System.out.print("Server was stopped!\n");
+		}
+		else if (msg.equals("startgame")) 
+		{
+			System.out.print("Game was started!\n");
 		}
 	}
 

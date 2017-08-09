@@ -27,6 +27,10 @@ public static void main(String[] args) throws IOException
 				System.out.print("Stopped Server!\n");
 				System.exit(0);
 			}
+			else if (input.equalsIgnoreCase("start"))
+			{
+				lobbyManager.StartGame();
+			}
 			else if (input.equalsIgnoreCase("list"))
 			{
 				for (Iterator<LobbyClient> i = lobbyManager.connectedClients.iterator(); i.hasNext();)
@@ -39,6 +43,7 @@ public static void main(String[] args) throws IOException
 					else 
 					{
 						System.out.print(client.playerName + ": disconnected\n");
+						i.remove();
 					}
 				}
 			}

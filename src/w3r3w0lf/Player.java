@@ -1,5 +1,9 @@
 package w3r3w0lf;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Player {
@@ -7,25 +11,42 @@ public class Player {
 	boolean isAlive;
 	Socket playerSocket;
 	String playerName;
-	playerRole playerRole;
+	PlayerRole role;
+	GameManager manager;
 
-	public enum playerRole {
-		villager, werewolf, witch, armor, girl, hunter, seer
+	public enum PlayerRole {
+		none, villager, werewolf, witch, armor, girl, hunter, seer
 	}
-
-	public void enumPlayerRole(playerRole PlayerRole) {
-		this.playerRole = PlayerRole;
+	
+	public Player(Socket sock, String name, PlayerRole role, GameManager manager)
+	{
+		this.playerSocket = sock;
+		this.playerName = name;
+		this.manager = manager;
+		this.role = role;
 	}
-
+	
 	public void SendMessage(String msg) {
+		try {
+			new DataOutputStream(playerSocket.getOutputStream()).writeBytes(msg + "\n");
+		} catch (IOException e) {
+			return;
+		}
+	}
+	public String GetMessage()
+	{
+		try {
+			return new BufferedReader(new InputStreamReader(playerSocket.getInputStream())).readLine();
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	public void TurnStart() {
 
 	}
 
-	public void turnStart() {
-
-	}
-
-	public void turnEnd() {
-
+	public void TurnEnd() {
+		SendMessage("turnend");
 	}
 }
