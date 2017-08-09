@@ -19,9 +19,4 @@ public class Werewolf extends Player {
 		
 		manager.BroadcastToRole(PlayerRole.werewolf, "werewolf;selected;" + playerName + ";" + response);
 	}
-	
-	@Override
-	public void TurnEnd() {
-		
-	}
 }

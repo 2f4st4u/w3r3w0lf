@@ -5,9 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
+import java.util.Scanner;
 
 public class Client implements Runnable {
 	Socket serverSocket;
+	Player.PlayerRole role;
 	
 	public Boolean Connect(InetAddress host, int port, String name)
 	{
@@ -49,6 +51,23 @@ public class Client implements Runnable {
 		else if (msg.equals("startgame")) 
 		{
 			System.out.print("Game was started!\n");
+		}
+		
+		if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf)
+		{
+			ProcessWerewolf(msg.replaceFirst("werewolf;", ""));
+		}
+	}
+	
+	private void ProcessWerewolf(String msg)
+	{
+		if (msg.equals("selectTarget"))
+		{
+			System.out.print("Select a person to kill:\n");
+			Scanner scan = new Scanner(System.in);
+			String person = scan.nextLine();
+			scan.close();
+			SendMessage(person);
 		}
 	}
 

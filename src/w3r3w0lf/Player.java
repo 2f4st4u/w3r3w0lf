@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Player {
+public class Player implements Runnable {
 	// Steuerung + A, Steuerung + Shift + F = Einrücken
 	boolean isAlive;
 	Socket playerSocket;
@@ -48,5 +48,17 @@ public class Player {
 
 	public void TurnEnd() {
 		SendMessage("turnend");
+	}
+	
+	public void Killed()
+	{
+		this.isAlive = false;
+		SendMessage("killed");
+	}
+
+	@Override
+	public void run() {
+		TurnStart();
+		TurnEnd();
 	}
 }
