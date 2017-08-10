@@ -7,12 +7,17 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Scanner;
 
+import w3r3w0lf.Player.PlayerRole;
+
 public class Client implements Runnable {
 	Socket serverSocket;
 	Player.PlayerRole role;
+	String playerName;
+	Scanner scan = new Scanner(System.in);
 
 	public Boolean Connect(InetAddress host, int port, String name) {
 		try {
+			playerName = name;
 			serverSocket = new Socket(host, port);
 			new DataOutputStream(serverSocket.getOutputStream()).writeBytes(name + "\n");
 			;
@@ -55,52 +60,58 @@ public class Client implements Runnable {
 			OnVote();
 		} else if (msg.startsWith("turn;")) {
 			OnTurn(msg.replaceFirst("turn;", ""));
+		} else if (msg.startsWith("killed;")) {
+			OnPlayerKilled(msg.replaceFirst("killed;", ""));
+		} else if (msg.equals("nightend")) {
+			OnNightEnd();
+		} else if (msg.startsWith("executed;")) {
+			OnPlayerExecuted(msg.replaceFirst("executed;", ""));
 		}
 			
-		if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf) {
+		else if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf) {
 			ProcessWerewolf(msg.replaceFirst("werewolf;", ""));
+			return;
 		}
-		if (msg.startsWith("witch;") && role == Player.PlayerRole.witch) {
+		else if (msg.startsWith("witch;") && role == Player.PlayerRole.witch) {
 			ProcessWitch(msg.replaceFirst("witch;", ""));
+			return;
 		}
-		if (msg.startsWith("hunter;") && role == Player.PlayerRole.hunter) {
+		else if (msg.startsWith("hunter;") && role == Player.PlayerRole.hunter) {
 			ProcessHunter(msg.replaceFirst("hunter;", ""));
+			return;
 		}
+		
+		/*else 
+		{
+			System.out.print("Unknown message: " + msg + "\n");
+		}*/
 	}
 
 	private void ProcessWerewolf(String msg) {
 		if (msg.equals("selectTarget")) {
 			System.out.print("Select a person to kill:\n");
-			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
 			SendMessage(person);
-			scan.close();
 		}
 	}
 
 	private void ProcessWitch(String msg) {
 		if (msg.equals("selectKillTarget")) {
 			System.out.print("Select a person to kill:\n");
-			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
-			scan.close();
 			SendMessage(person);
 		} else if (msg.equals("selectHealTarget")) {
 			System.out.print("Select a person to heal:\n");
-			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
-			scan.close();
 			SendMessage(person);
 		}
 	}
 
 	private void ProcessHunter(String msg) {
 		if (msg.equals("selectTarget")) {
-			System.out.print("Select a person to kill:\n");
-			Scanner scan = new Scanner(System.in);
+			System.out.print("Select a person to shoot:\n");
 			String person = scan.nextLine();
 			SendMessage(person);
-			scan.close();
 		}
 	}
 
@@ -160,15 +171,13 @@ public class Client implements Runnable {
 	private void OnVote()
 	{
 		System.out.print("Select a person to execute:\n");
-		Scanner scan = new Scanner(System.in);
 		String person = scan.nextLine();
-		scan.close();
 		SendMessage(person);
 	}
 	
 	private void OnTurn(String turn)
 	{
-		if (turn.equals("werewolves"))
+		if (turn.equals("werewolves") && role != PlayerRole.werewolf)
 		{
 			System.out.print("Werewolves are selecting...\n");
 		}
@@ -178,4 +187,23 @@ public class Client implements Runnable {
 		}
 	}
 	
+	private void OnPlayerKilled(String name)
+	{
+		if (name.equals(playerName))
+		{
+			return;
+		}
+		
+		System.out.print(name + " was killed.\n");
+	}
+	
+	private void OnNightEnd()
+	{
+		System.out.print("The village wakes up\n");
+	}
+	
+	private void OnPlayerExecuted(String name)
+	{
+		
+	}
 }

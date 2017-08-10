@@ -19,7 +19,7 @@ public class GameManager {
 		for (Iterator<LobbyClient> i = clients.iterator(); i.hasNext();)
 		{
 			LobbyClient client = i.next();
-			int randomInt = rand.nextInt(clients.size() - 1);
+			int randomInt = rand.nextInt(availableRoles.size());
 			switch (availableRoles.get(randomInt))
 			{
 			case armor:
@@ -74,11 +74,17 @@ public class GameManager {
 		
 		Werewolves();
 		OnNightEnd();
-		DayVote();
-		if (!CheckWin())
+		if (CheckWin())
 		{
-			NextRound();
+			return;
 		}
+		DayVote();
+		if (CheckWin())
+		{
+			return;
+		}
+		
+		NextRound();
 	}
 
 	private void Werewolves()

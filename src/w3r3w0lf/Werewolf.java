@@ -10,6 +10,8 @@ public class Werewolf extends Player {
 	
 	@Override
 	public void TurnStart() {
+		this.vote = null;
+		
 		if (!isAlive)
 		{
 			return;
@@ -17,7 +19,7 @@ public class Werewolf extends Player {
 		
 		SendMessage("werewolf;selectTarget");
 		String response = GetMessage();
-		if (!manager.PlayerExists(response))
+		if (!manager.PlayerExists(response) || manager.GetPlayerByName(response).role == PlayerRole.werewolf)
 		{
 			return;
 		}

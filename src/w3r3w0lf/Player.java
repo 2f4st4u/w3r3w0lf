@@ -54,6 +54,11 @@ public class Player implements Runnable {
 	
 	public void Killed()
 	{
+		if (!this.isAlive)
+		{
+			return;
+		}
+		
 		this.isAlive = false;
 		SendMessage("died");
 	}
