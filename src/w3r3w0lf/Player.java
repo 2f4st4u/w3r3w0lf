@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Player implements Runnable {
 	// Steuerung + A, Steuerung + Shift + F = Einrücken
-	boolean isAlive = true;
+	boolean isAlive;
 	Socket playerSocket;
 	String playerName;
 	PlayerRole role;
@@ -43,7 +43,7 @@ public class Player implements Runnable {
 	}
 	
 	public void TurnStart() {
-		
+
 	}
 
 	public void TurnEnd() {

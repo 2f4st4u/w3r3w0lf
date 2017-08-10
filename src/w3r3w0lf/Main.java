@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 
-
 public class Main {
 public static void main(String[] args) throws IOException
 {
+	
 	Scanner scan = new Scanner(System.in);
 	System.out.print("Do you want to host or join?\n");
 	String answer = scan.nextLine();
@@ -28,10 +28,7 @@ public static void main(String[] args) throws IOException
 			}
 			else if (input.equalsIgnoreCase("start"))
 			{
-				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
-				roles.add(Player.PlayerRole.werewolf);
-				roles.add(Player.PlayerRole.werewolf);
-				lobbyManager.StartGame(roles);
+				lobbyManager.StartGame();
 			}
 			else if (input.equalsIgnoreCase("list"))
 			{
@@ -69,6 +66,7 @@ public static void main(String[] args) throws IOException
 		System.exit(0);
 	}
 	scan.close();
+	System.out.println("Das Dorf schläft ein.....\n");
 	System.exit(0);
 }
 }
