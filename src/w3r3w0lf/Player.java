@@ -17,7 +17,7 @@ public class Player implements Runnable {
 	Player lover;
 
 	public enum PlayerRole {
-		none, villager, werewolf, witch, armor, girl, hunter, seer
+		none, villager, werewolf, witch, amor, girl, hunter, seer
 	}
 	
 	public Player(Socket sock, String name, PlayerRole role, GameManager manager)
@@ -52,7 +52,7 @@ public class Player implements Runnable {
 		SendMessage("turnend");
 	}
 	
-	public void Killed()
+	public void Killed(String reason)
 	{
 		if (!this.isAlive)
 		{
@@ -60,7 +60,7 @@ public class Player implements Runnable {
 		}
 		
 		this.isAlive = false;
-		SendMessage("died");
+		manager.Broadcast("killed;" + this.playerName + ";" + reason);
 	}
 	
 	public void Vote()

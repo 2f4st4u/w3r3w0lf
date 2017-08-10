@@ -22,7 +22,8 @@ public class GameManager {
 			int randomInt = rand.nextInt(availableRoles.size());
 			switch (availableRoles.get(randomInt))
 			{
-			case armor:
+			case amor:
+				players.add(new Amor(client.playerSocket, client.playerName, PlayerRole.amor, this));
 				break;
 			case girl:
 				break;
@@ -32,6 +33,7 @@ public class GameManager {
 			case none:
 				break;
 			case seer:
+				players.add(new Seer(client.playerSocket, client.playerName, PlayerRole.seer, this));
 				break;
 			case villager:
 				players.add(new Player(client.playerSocket, client.playerName, PlayerRole.villager, this));
@@ -40,6 +42,7 @@ public class GameManager {
 				players.add(new Werewolf(client.playerSocket, client.playerName, PlayerRole.werewolf, this));
 				break;
 			case witch:
+				players.add(new Witch(client.playerSocket, client.playerName, PlayerRole.witch, this));
 				break;
 			default:
 				break;}
@@ -53,6 +56,14 @@ public class GameManager {
 		for(Player player : players)
 		{
 			player.SendMessage("role;" + player.role);
+			
+			for (Player ply : players)
+			{
+				if (ply != player) 
+				{
+					player.SendMessage("playerJoined;" + ply.playerName);
+				}
+			}
 		}
 		
 		NextRound();
@@ -65,10 +76,20 @@ public class GameManager {
 		
 		if (round == 1)
 		{
-			if (GetPlayerByRole(PlayerRole.armor) != null)
+			if (GetPlayerByRole(PlayerRole.amor) != null)
 			{
-				Broadcast("turn;armor");
-				GetPlayerByRole(PlayerRole.armor).TurnStart();
+				Broadcast("turn;amor");
+				GetPlayerByRole(PlayerRole.amor).TurnStart();
+			}
+			if (GetPlayerByRole(PlayerRole.seer) != null)
+			{
+				Broadcast("turn;seer");
+				GetPlayerByRole(PlayerRole.seer).TurnStart();
+			}
+			if (GetPlayerByRole(PlayerRole.witch) != null)
+			{
+				Broadcast("turn;witch");
+				GetPlayerByRole(PlayerRole.witch).TurnStart();
 			}
 		}
 		
@@ -142,8 +163,11 @@ public class GameManager {
 		
 		for(Player player : killedPlayers)
 		{
-			Broadcast("killed;" + player.playerName);
-			player.Killed();
+			player.Killed(" was killed in the night.");
+			if (player.lover != null)
+			{
+				player.lover.Killed(" died of a broken hearth.");
+			}
 		}
 		
 		killedPlayers.clear();
@@ -197,8 +221,7 @@ public class GameManager {
 		{
 			return;
 		}
-		GetPlayerByName(biggestVote.identifier).Killed();
-		Broadcast("executed;" + GetPlayerByName(biggestVote.identifier).playerName);
+		GetPlayerByName(biggestVote.identifier).Killed(" was executed by vote.");
 	}
 	
 	private boolean CheckWin()
@@ -227,6 +250,17 @@ public class GameManager {
 		{
 			Broadcast("win;werewolf");
 			return true;
+		}
+		else if (numOfWerewolfes + numOfVillagers == 2)
+		{
+			for (Player ply : players)
+			{
+				if (ply.isAlive && ply.lover != null && ply.lover.isAlive)
+				{
+					Broadcast("win;love");
+					return true;
+				}
+			}
 		}
 		
 		return false;

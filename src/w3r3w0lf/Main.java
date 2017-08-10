@@ -40,7 +40,7 @@ public static void main(String[] args) throws IOException
 				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
 				roles.add(Player.PlayerRole.werewolf);
 				roles.add(Player.PlayerRole.villager);
-				roles.add(Player.PlayerRole.hunter);
+				roles.add(Player.PlayerRole.witch);
 				
 				lobbyManager.StartGame(roles);
 			}

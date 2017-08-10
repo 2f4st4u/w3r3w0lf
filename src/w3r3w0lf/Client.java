@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.util.Scanner;
+import java.util.*;
 
 import w3r3w0lf.Player.PlayerRole;
 
@@ -14,13 +14,13 @@ public class Client implements Runnable {
 	Player.PlayerRole role;
 	String playerName;
 	Scanner scan = new Scanner(System.in);
+	List<String> players = new ArrayList<String>();
 
 	public Boolean Connect(InetAddress host, int port, String name) {
 		try {
 			playerName = name;
 			serverSocket = new Socket(host, port);
 			new DataOutputStream(serverSocket.getOutputStream()).writeBytes(name + "\n");
-			;
 			return true;
 
 		} catch (IOException e) {
@@ -29,8 +29,14 @@ public class Client implements Runnable {
 		}
 	}
 
-	private String WaitForMessage() throws IOException {
-		return new BufferedReader(new InputStreamReader(serverSocket.getInputStream())).readLine();
+	private String WaitForMessage() {
+		try {
+			return new BufferedReader(new InputStreamReader(serverSocket.getInputStream())).readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	private void SendMessage(String msg) {
@@ -50,8 +56,6 @@ public class Client implements Runnable {
 			OnStartGame();
 		} else if (msg.startsWith("role;")) {
 			OnRoleAssign(Player.PlayerRole.valueOf(msg.replaceFirst("role;", "")));
-		} else if (msg.equals("died")) {
-			OnDied();
 		} else if (msg.startsWith("round;")) {
 			OnRoundStart(Integer.parseInt(msg.replaceFirst("round;", "")));
 		} else if (msg.startsWith("win;")) {
@@ -61,11 +65,13 @@ public class Client implements Runnable {
 		} else if (msg.startsWith("turn;")) {
 			OnTurn(msg.replaceFirst("turn;", ""));
 		} else if (msg.startsWith("killed;")) {
-			OnPlayerKilled(msg.replaceFirst("killed;", ""));
+			OnPlayerKilled(msg.replaceFirst("killed;", "").split(";")[0], msg.replaceFirst("killed;", "").split(";")[1]);
 		} else if (msg.equals("nightend")) {
 			OnNightEnd();
-		} else if (msg.startsWith("executed;")) {
-			OnPlayerExecuted(msg.replaceFirst("executed;", ""));
+		} else if (msg.startsWith("lover;")) {
+			OnLover(msg.replaceFirst("lover;", ""));
+		} else if (msg.startsWith("playerJoined;")) {
+			OnPlayerJoined(msg.replaceFirst("playerJoined;", ""));
 		}
 			
 		else if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf) {
@@ -80,11 +86,14 @@ public class Client implements Runnable {
 			ProcessHunter(msg.replaceFirst("hunter;", ""));
 			return;
 		}
-		
-		/*else 
-		{
-			System.out.print("Unknown message: " + msg + "\n");
-		}*/
+		else if (msg.startsWith("amor;") && role == Player.PlayerRole.amor) {
+			ProcessAmor(msg.replaceFirst("amor;", ""));
+			return;
+		}
+		else if (msg.startsWith("seer;") && role == Player.PlayerRole.seer) {
+			ProcessSeer(msg.replaceFirst("seer;", ""));
+			return;
+		}
 	}
 
 	private void ProcessWerewolf(String msg) {
@@ -100,8 +109,14 @@ public class Client implements Runnable {
 			System.out.print("Select a person to kill:\n");
 			String person = scan.nextLine();
 			SendMessage(person);
-		} else if (msg.equals("selectHealTarget")) {
+		} 
+		else if (msg.startsWith("savePlayer;")) {
 			System.out.print("Select a person to heal:\n");
+			String[] playerNames = msg.replaceFirst("savePlayer;", "").split(";");
+			for (String playerName : playerNames)
+			{
+				System.out.print(playerName + "\n");
+			}
 			String person = scan.nextLine();
 			SendMessage(person);
 		}
@@ -114,11 +129,30 @@ public class Client implements Runnable {
 			SendMessage(person);
 		}
 	}
+	
+	private void ProcessAmor(String msg)
+	{
+		if (msg.equals("selectLovers")) {
+			System.out.print("Select first lover:\n");
+			SendMessage(scan.nextLine());
+			System.out.print("Select second lover:\n");
+			SendMessage(scan.nextLine());
+		}
+	}
+	
+	private void ProcessSeer(String msg)
+	{
+		if (msg.equals("whoWantToSee")) {
+			System.out.print("Select a person to check:\n");
+			String person = scan.nextLine();
+			SendMessage(person);
+			System.out.print(WaitForMessage() + "\n");
+		}
+	}
 
 	@Override
 	public void run() {
 		while (true) {
-			try {
 				String input = WaitForMessage();
 				if (input == null) {
 					Thread.yield();
@@ -126,10 +160,6 @@ public class Client implements Runnable {
 				}
 
 				ProcessMessage(input);
-
-			} catch (IOException e) {
-				return;
-			}
 
 		}
 	}
@@ -146,10 +176,6 @@ public class Client implements Runnable {
 		this.role = role;
 		System.out.print("You are: " + role + "\n");
 	}
-
-	private void OnDied() {
-		System.out.print("You died!\n");
-	}
 	
 	private void OnRoundStart(int round)
 	{
@@ -162,9 +188,17 @@ public class Client implements Runnable {
 		{
 			System.out.print("Villagers won!\n");
 		}
-		else 
+		else if (winners.equals("werewolf")) 
 		{
 			System.out.print("Werewolves won!\n");
+		}
+		else if (winners.equals("love"))
+		{
+			System.out.print("The lovers won!\n");
+		}
+		else 
+		{
+			System.out.print("I don't even know who won, this wasn't supposed to happen O_O\n");
 		}
 	}
 	
@@ -181,20 +215,25 @@ public class Client implements Runnable {
 		{
 			System.out.print("Werewolves are selecting...\n");
 		}
-		if (turn.equals("armor"))
+		if (turn.equals("amor") && role != PlayerRole.amor)
 		{
-			System.out.print("Armor is spreading love...\n");
+			System.out.print("Amor is spreading love...\n");
+		}
+		if (turn.equals("seer") && role != PlayerRole.seer)
+		{
+			System.out.print("Seer is checking a card...\n");
 		}
 	}
 	
-	private void OnPlayerKilled(String name)
+	private void OnPlayerKilled(String name, String reason)
 	{
 		if (name.equals(playerName))
 		{
+			System.out.print(("You" + reason + "\n").replaceAll("was", "were"));
 			return;
 		}
 		
-		System.out.print(name + " was killed.\n");
+		System.out.print(name + reason + "\n");
 	}
 	
 	private void OnNightEnd()
@@ -202,8 +241,13 @@ public class Client implements Runnable {
 		System.out.print("The village wakes up\n");
 	}
 	
-	private void OnPlayerExecuted(String name)
+	private void OnLover(String name)
 	{
-		
+		System.out.print("You're in love with " + name + "\n");
+	}
+	
+	private void OnPlayerJoined(String name)
+	{
+		players.add(name);
 	}
 }
