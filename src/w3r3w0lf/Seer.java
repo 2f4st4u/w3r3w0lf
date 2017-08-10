@@ -15,6 +15,10 @@ public class Seer extends Player {
 		if (!manager.PlayerExists(SeerWhoWantToSee)) {
 			return;
 		}
-
+		if (manager.GetPlayerByName(SeerWhoWantToSee).role.name().equals("werewolf")) {
+			SendMessage(SeerWhoWantToSee + " is on the dark side.");
+		} else if (!manager.GetPlayerByName(SeerWhoWantToSee).role.name().equals("werewolf")) {
+			SendMessage(SeerWhoWantToSee + " is on the light side.");
+		}
 	}
 }
