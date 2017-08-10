@@ -17,7 +17,7 @@ public class GameManager {
 		for (Iterator<LobbyClient> i = clients.iterator(); i.hasNext();)
 		{
 			LobbyClient client = i.next();
-			int randomInt = rand.nextInt(clients.size());
+			int randomInt = rand.nextInt(clients.size() - 1);
 			switch (availableRoles.get(randomInt))
 			{
 			case armor:
@@ -58,23 +58,49 @@ public class GameManager {
 	{
 		round++;
 		
-		//List<Thread> threadList = new ArrayList<Thread>();
+		List<Vote> votes = new ArrayList<Vote>();
+		Vote biggestVote = null;
+		
 		for (Player ply : GetPlayersByRole(Player.PlayerRole.werewolf))
 		{
 			Werewolf werewolf = (Werewolf)ply;
 			werewolf.TurnStart();
-			//Thread th = new Thread(werewolf);
-			//th.run();
-			//threadList.add(th);
+			Boolean voted = false;
+			for (Vote v : votes)
+			{
+				if (werewolf.vote == null || werewolf.vote.equals(""))
+				{
+					break;
+				}
+				
+				if (v.identifier.equals(werewolf.vote))
+				{
+					v.numOfVotes++;
+					voted = true;
+					break;
+				}
+			}
+			if (!voted)
+			{
+				votes.add(new Vote(werewolf.vote));
+			}
 		}
-		/*for (Thread th : threadList)
+		
+		for (Vote v : votes)
 		{
-			try {
-				th.join(60000);
-			} catch (InterruptedException e) {}
-		}*/
+			if (biggestVote == null)
+			{
+				biggestVote = v;
+				continue;
+			}
+			
+			if (v.numOfVotes > biggestVote.numOfVotes)
+			{
+				biggestVote = v;
+			}
+		} 
 		
-		
+		KillPlayer(biggestVote.identifier);
 	}
 	
 	public void Broadcast(String msg)

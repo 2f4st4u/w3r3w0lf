@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="1110.0" fitWidth="1943.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Village%20by%20Night.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="1030.0" layoutY="82.0" prefHeight="1011.0" prefWidth="908.0" style="-fx-background-color: black; -fx-opacity: 50%;" />
+      <ListView fx:id="list_playername_lobby" layoutX="32.0" layoutY="258.0" prefHeight="758.0" prefWidth="348.0" style="-fx-background-color: black; -fx-border-color: red;" />
+      <Label layoutX="33.0" layoutY="200.0" prefHeight="47.0" prefWidth="183.0" text="Spielernamen:" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="33.0" />
+         </font></Label>
+      <Label fx:id="label_playercount" alignment="CENTER_RIGHT" layoutX="250.0" layoutY="198.0" prefHeight="53.0" prefWidth="128.0" text="0/0" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="28.0" />
+         </font>
+      </Label>
+      <Pane layoutX="-1.0" layoutY="-2.0" prefHeight="115.0" prefWidth="1937.0" style="-fx-background-color: black;">
+         <children>
+            <TextField fx:id="tbox_gamename" alignment="CENTER" layoutX="1.0" layoutY="5.0" prefHeight="86.0" prefWidth="1946.0" promptText="Der Name des Spiels" style="-fx-background-color: black; -fx-text-fill: #ff0000;">
+               <font>
+                  <Font name="October Crow" size="45.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <CheckBox fx:id="ckbox_hunter" layoutX="1112.0" layoutY="674.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="171.0" text="Jaeger" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="28.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="btn_start" layoutX="1335.0" layoutY="846.0" mnemonicParsing="false" prefHeight="170.0" prefWidth="552.0" style="-fx-border-color: green; -fx-background-color: black;" text="Bereit / Start" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="34.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_disconnect" layoutX="1096.0" layoutY="919.0" mnemonicParsing="false" prefHeight="97.0" prefWidth="228.0" style="-fx-border-color: red; -fx-background-color: black;" text="Verlassen" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="34.0" />
+         </font>
+      </Button>
+      <CheckBox fx:id="ckbox_witch" layoutX="1316.0" layoutY="612.0" mnemonicParsing="false" text="Hexe" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="28.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="ckbox_armor" layoutX="1317.0" layoutY="676.0" mnemonicParsing="false" text="Armor" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="28.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="1098.0" layoutY="201.0" text="Spieleranzahl (min 5):" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="1108.0" layoutY="385.0" text="Werwoelfe:" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="1106.0" layoutY="290.0" text="Buerger:" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="37.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tbox_citizencount" layoutX="1763.0" layoutY="284.0" prefHeight="70.0" prefWidth="120.0" promptText="4" style="-fx-background-color: black; -fx-text-fill: red; -fx-border-color: red;">
+         <font>
+            <Font name="October Crow" size="30.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tbox_werewolfescount" layoutX="1763.0" layoutY="379.0" prefHeight="70.0" prefWidth="120.0" promptText="1" style="-fx-background-color: black; -fx-text-fill: red; -fx-border-color: red;">
+         <font>
+            <Font name="October Crow" size="30.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="tbox_playercount" layoutX="1762.0" layoutY="198.0" prefHeight="70.0" prefWidth="120.0" promptText="5" style="-fx-background-color: black; -fx-text-fill: red; -fx-border-color: red;">
+         <font>
+            <Font name="October Crow" size="30.0" />
+         </font>
+      </TextField>
+      <CheckBox fx:id="ckbox_seer" layoutX="1111.0" layoutY="612.0" mnemonicParsing="false" text="Seherin" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="28.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="1178.0" layoutY="515.0" text=" --------- Aktive Spezialkarten ---------" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="1245.0" layoutY="127.0" text=" --------- Allgemeines ---------" textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="40.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_hostIP" alignment="CENTER" layoutX="401.0" layoutY="969.0" prefHeight="41.0" prefWidth="623.0" text="Deine IP-Adresse ist: " textFill="WHITE">
+         <font>
+            <Font name="October Crow" size="29.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

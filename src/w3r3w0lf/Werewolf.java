@@ -21,6 +21,7 @@ public class Werewolf extends Player {
 		{
 			return;
 		}
+		this.vote = response;
 		
 		manager.BroadcastToRole(PlayerRole.werewolf, "werewolf;selected;" + playerName + ";" + response);
 	}

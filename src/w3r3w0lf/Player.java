@@ -8,11 +8,12 @@ import java.net.Socket;
 
 public class Player implements Runnable {
 	// Steuerung + A, Steuerung + Shift + F = Einrücken
-	boolean isAlive = true;
+	boolean isAlive;
 	Socket playerSocket;
 	String playerName;
 	PlayerRole role;
 	GameManager manager;
+	String vote;
 
 	public enum PlayerRole {
 		none, villager, werewolf, witch, armor, girl, hunter, seer
@@ -43,7 +44,7 @@ public class Player implements Runnable {
 	}
 	
 	public void TurnStart() {
-		
+		vote = null;
 	}
 
 	public void TurnEnd() {
