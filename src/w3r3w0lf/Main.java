@@ -1,15 +1,26 @@
 package w3r3w0lf;
 
 import java.util.*;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 
 
 
-public class Main {
-public static void main(String[] args) throws IOException
-{
+public class Main  extends Application {
+public static void main (String[] args) throws IOException{
+
+	launch(args);
+    
+	
 	Scanner scan = new Scanner(System.in);
+	
 	System.out.print("Do you want to host or join?\n");
 	String answer = scan.nextLine();
 	if (answer.equalsIgnoreCase("host"))
@@ -28,10 +39,7 @@ public static void main(String[] args) throws IOException
 			}
 			else if (input.equalsIgnoreCase("start"))
 			{
-				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
-				roles.add(Player.PlayerRole.werewolf);
-				roles.add(Player.PlayerRole.werewolf);
-				lobbyManager.StartGame(roles);
+				lobbyManager.StartGame();
 			}
 			else if (input.equalsIgnoreCase("list"))
 			{
@@ -71,4 +79,20 @@ public static void main(String[] args) throws IOException
 	scan.close();
 	System.exit(0);
 }
+
+@Override	
+public void start(Stage arg0) throws Exception {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_start.fxml"));
+    Scene sc = new Scene(loader.load());
+	ExpController c = new ExpController();
+	arg0.setScene(sc);
+	arg0.show();
+}
+
+/*@Override
+public void start(Stage arg0) throws Exception {
+	// TODO Auto-generated method stub
+	
+}
+*/
 }
