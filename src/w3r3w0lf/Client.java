@@ -116,7 +116,7 @@ public class Client implements Runnable {
 	}
 
 	private void OnServerStop() {
-		System.out.print("Server started!\n");
+		System.out.print("Server stop!\n");
 	}
 
 	private void OnStartGame() {
