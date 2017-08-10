@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Player implements Runnable {
 	// Steuerung + A, Steuerung + Shift + F = Einrücken
-	boolean isAlive;
+	boolean isAlive = true;
 	Socket playerSocket;
 	String playerName;
 	PlayerRole role;
@@ -54,8 +54,31 @@ public class Player implements Runnable {
 	
 	public void Killed()
 	{
+		if (!this.isAlive)
+		{
+			return;
+		}
+		
 		this.isAlive = false;
-		SendMessage("killed");
+		SendMessage("died");
+	}
+	
+	public void Vote()
+	{
+		this.vote = null;
+		
+		if (!isAlive)
+		{
+			return;
+		}
+		
+		SendMessage("vote");
+		String response = GetMessage();
+		if (!manager.PlayerExists(response))
+		{
+			return;
+		}
+		this.vote = response;
 	}
 
 	@Override
@@ -63,4 +86,5 @@ public class Player implements Runnable {
 		TurnStart();
 		TurnEnd();
 	}
+	
 }
