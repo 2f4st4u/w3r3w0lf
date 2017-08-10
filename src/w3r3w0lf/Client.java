@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Client implements Runnable {
 	Socket serverSocket;
 	Player.PlayerRole role;
+	Scanner scan = new Scanner(System.in);
 	
 	public Boolean Connect(InetAddress host, int port, String name)
 	{
@@ -72,9 +73,7 @@ public class Client implements Runnable {
 		if (msg.equals("selectTarget"))
 		{
 			System.out.print("Select a person to kill:\n");
-			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
-			scan.close();
 			SendMessage(person);
 		}
 	}
