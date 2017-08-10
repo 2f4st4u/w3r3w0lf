@@ -7,12 +7,12 @@ import javafx.scene.media.MediaPlayer;
 
 
 public class AudioManager {
-	public static void PlayAudio(String sourceFile)
-	{
-		String audioFile= "\\src\\resources\\" + sourceFile.toString();
-		Media hit = new Media(new File(audioFile).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(hit);	
-		mediaPlayer.play();
-	}
-	
+  public static void PlayAudio(String sourceFile)
+  {
+    String audioFile= "\\src\\resources\\" + sourceFile.toString();
+    Media hit = new Media(new File(audioFile).toURI().toString());
+    MediaPlayer mediaPlayer = new MediaPlayer(hit); 
+    mediaPlayer.play();
+  }
+  
 }
