@@ -13,6 +13,7 @@ public class GameManager {
 	{
 		availableRoles = roles;
 		players = new ArrayList<Player>();
+		killedPlayers = new ArrayList<Player>();
 		Random rand = new Random();
 		
 		for (Iterator<LobbyClient> i = clients.iterator(); i.hasNext();)
@@ -26,12 +27,14 @@ public class GameManager {
 			case girl:
 				break;
 			case hunter:
+				players.add(new Hunter(client.playerSocket, client.playerName, PlayerRole.hunter, this));
 				break;
 			case none:
 				break;
 			case seer:
 				break;
 			case villager:
+				players.add(new Player(client.playerSocket, client.playerName, PlayerRole.villager, this));
 				break;
 			case werewolf:
 				players.add(new Werewolf(client.playerSocket, client.playerName, PlayerRole.werewolf, this));
@@ -58,11 +61,13 @@ public class GameManager {
 	private void NextRound()
 	{
 		round++;
+		Broadcast("round;" + round);
 		
 		if (round == 1)
 		{
 			if (GetPlayerByRole(PlayerRole.armor) != null)
 			{
+				Broadcast("turn;armor");
 				GetPlayerByRole(PlayerRole.armor).TurnStart();
 			}
 		}
@@ -80,6 +85,8 @@ public class GameManager {
 	{
 		List<Vote> votes = new ArrayList<Vote>();
 		Vote biggestVote = null;
+		
+		Broadcast("turn;werewolves");
 		
 		for (Player ply : GetPlayersByRole(Player.PlayerRole.werewolf))
 		{
@@ -180,7 +187,10 @@ public class GameManager {
 				biggestVote = v;
 			}
 		} 
-		
+		if (biggestVote == null || GetPlayerByName(biggestVote.identifier) == null)
+		{
+			return;
+		}
 		GetPlayerByName(biggestVote.identifier).Killed();
 		Broadcast("executed;" + GetPlayerByName(biggestVote.identifier).playerName);
 	}

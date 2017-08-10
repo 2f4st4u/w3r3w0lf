@@ -45,10 +45,18 @@ public class Client implements Runnable {
 			OnStartGame();
 		} else if (msg.startsWith("role;")) {
 			OnRoleAssign(Player.PlayerRole.valueOf(msg.replaceFirst("role;", "")));
-		} else if (msg.equals("killed")) {
-			OnKilled();
+		} else if (msg.equals("died")) {
+			OnDied();
+		} else if (msg.startsWith("round;")) {
+			OnRoundStart(Integer.parseInt(msg.replaceFirst("round;", "")));
+		} else if (msg.startsWith("win;")) {
+			OnGameEnd(msg.replaceFirst("win;", ""));
+		} else if (msg.equals("vote")) {
+			OnVote();
+		} else if (msg.startsWith("turn;")) {
+			OnTurn(msg.replaceFirst("turn;", ""));
 		}
-
+			
 		if (msg.startsWith("werewolf;") && role == Player.PlayerRole.werewolf) {
 			ProcessWerewolf(msg.replaceFirst("werewolf;", ""));
 		}
@@ -65,8 +73,8 @@ public class Client implements Runnable {
 			System.out.print("Select a person to kill:\n");
 			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
-			scan.close();
 			SendMessage(person);
+			scan.close();
 		}
 	}
 
@@ -116,7 +124,7 @@ public class Client implements Runnable {
 	}
 
 	private void OnServerStop() {
-		System.out.print("Server started!\n");
+		System.out.print("Server stopped!\n");
 	}
 
 	private void OnStartGame() {
@@ -128,7 +136,46 @@ public class Client implements Runnable {
 		System.out.print("You are: " + role + "\n");
 	}
 
-	private void OnKilled() {
-		System.out.print("You were killed!\n");
+	private void OnDied() {
+		System.out.print("You died!\n");
 	}
+	
+	private void OnRoundStart(int round)
+	{
+		System.out.print("Round: " + round + "\n");
+	}
+	
+	private void OnGameEnd(String winners)
+	{
+		if (winners.equals("villager"))
+		{
+			System.out.print("Villagers won!\n");
+		}
+		else 
+		{
+			System.out.print("Werewolves won!\n");
+		}
+	}
+	
+	private void OnVote()
+	{
+		System.out.print("Select a person to execute:\n");
+		Scanner scan = new Scanner(System.in);
+		String person = scan.nextLine();
+		scan.close();
+		SendMessage(person);
+	}
+	
+	private void OnTurn(String turn)
+	{
+		if (turn.equals("werewolves"))
+		{
+			System.out.print("Werewolves are selecting...\n");
+		}
+		if (turn.equals("armor"))
+		{
+			System.out.print("Armor is spreading love...\n");
+		}
+	}
+	
 }

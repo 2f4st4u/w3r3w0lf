@@ -23,6 +23,6 @@ public class Werewolf extends Player {
 		}
 		this.vote = response;
 		
-		manager.BroadcastToRole(PlayerRole.werewolf, "werewolf;selected;" + playerName + ";" + response);
+		//manager.BroadcastToRole(PlayerRole.werewolf, "werewolf;selected;" + playerName + ";" + response);
 	}
 }

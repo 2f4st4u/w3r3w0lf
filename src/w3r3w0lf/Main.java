@@ -39,7 +39,7 @@ public static void main(String[] args) throws IOException
 
 				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
 				roles.add(Player.PlayerRole.werewolf);
-				roles.add(Player.PlayerRole.werewolf);
+				roles.add(Player.PlayerRole.villager);
 				
 				lobbyManager.StartGame(roles);
 			}
@@ -73,8 +73,7 @@ public static void main(String[] args) throws IOException
 		
 		Client player = new Client();
 		player.Connect(InetAddress.getByName("localhost"), 1337, name);
-		new Thread(player).start();
-		scan.nextLine();
+		player.run();
 		scan.close();
 		System.exit(0);
 	}
