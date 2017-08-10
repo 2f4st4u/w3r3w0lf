@@ -91,8 +91,8 @@ public class Client implements Runnable {
 			System.out.print("Select a person to kill:\n");
 			Scanner scan = new Scanner(System.in);
 			String person = scan.nextLine();
-			scan.close();
 			SendMessage(person);
+			scan.close();
 		}
 	}
 

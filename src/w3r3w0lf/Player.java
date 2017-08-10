@@ -13,6 +13,7 @@ public class Player implements Runnable {
 	String playerName;
 	PlayerRole role;
 	GameManager manager;
+	String vote;
 
 	public enum PlayerRole {
 		none, villager, werewolf, witch, armor, girl, hunter, seer
@@ -43,7 +44,7 @@ public class Player implements Runnable {
 	}
 	
 	public void TurnStart() {
-
+		vote = null;
 	}
 
 	public void TurnEnd() {

@@ -28,7 +28,11 @@ public static void main(String[] args) throws IOException
 			}
 			else if (input.equalsIgnoreCase("start"))
 			{
-				lobbyManager.StartGame();
+				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
+				roles.add(Player.PlayerRole.werewolf);
+				roles.add(Player.PlayerRole.werewolf);
+				
+				lobbyManager.StartGame(roles);
 			}
 			else if (input.equalsIgnoreCase("list"))
 			{
@@ -50,16 +54,16 @@ public static void main(String[] args) throws IOException
 	}
 	else if (answer.equalsIgnoreCase("join"))
 	{
-		System.out.print("Enter the IP Address:\n");
+		/*System.out.print("Enter the IP Address:\n");
 		InetAddress ip = InetAddress.getByName(scan.nextLine());
 		System.out.print("Enter port number:\n");
 		int port = scan.nextInt();
-		scan.nextLine();
+		scan.nextLine();*/
 		System.out.print("Enter your name:\n");
 		String name = scan.nextLine();
 		
 		Client player = new Client();
-		player.Connect(ip, port, name);
+		player.Connect(InetAddress.getByName("localhost"), 1337, name);
 		new Thread(player).start();
 		scan.nextLine();
 		scan.close();
