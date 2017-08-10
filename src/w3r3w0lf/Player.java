@@ -56,10 +56,27 @@ public class Player implements Runnable {
 		this.isAlive = false;
 		SendMessage("killed");
 	}
+	
+	public void Vote()
+	{
+		if (!isAlive)
+		{
+			return;
+		}
+		
+		SendMessage("vote");
+		String response = GetMessage();
+		if (!manager.PlayerExists(response))
+		{
+			return;
+		}
+		this.vote = response;
+	}
 
 	@Override
 	public void run() {
 		TurnStart();
 		TurnEnd();
 	}
+	
 }

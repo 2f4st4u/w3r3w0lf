@@ -6,6 +6,7 @@ import w3r3w0lf.Player.PlayerRole;
 public class GameManager {
 	List<PlayerRole> availableRoles;
 	List<Player> players;
+	List<Player> killedPlayers;
 	int round = 0;
 	
 	public void Initialize(List<LobbyClient> clients, List<PlayerRole> roles)
@@ -58,6 +59,18 @@ public class GameManager {
 	{
 		round++;
 		
+		Werewolves();
+		OnNightEnd();
+		DayVote();
+		if (!CheckWin())
+		{
+			NextRound();
+		}
+		
+	}
+
+	private void Werewolves()
+	{
 		List<Vote> votes = new ArrayList<Vote>();
 		Vote biggestVote = null;
 		
@@ -103,11 +116,119 @@ public class GameManager {
 		KillPlayer(biggestVote.identifier);
 	}
 	
+	private void OnNightEnd()
+	{
+		Broadcast("nightend");
+		
+		for(Player player : killedPlayers)
+		{
+			Broadcast("killed;" + player.playerName);
+			player.Killed();
+		}
+		
+		killedPlayers.clear();
+	}
+	
+	private void DayVote()
+	{
+		List<Vote> votes = new ArrayList<Vote>();
+		Vote biggestVote = null;
+		
+		for (Player ply : players)
+		{
+			ply.Vote();
+			if (ply.vote == null || ply.vote.equals(""))
+			{
+				continue;
+			}
+			
+			Boolean voted = false;
+			for (Vote v : votes)
+			{
+				
+				
+				if (v.identifier.equals(ply.vote))
+				{
+					v.numOfVotes++;
+					voted = true;
+					break;
+				}
+			}
+			if (!voted)
+			{
+				votes.add(new Vote(ply.vote));
+			}
+		}
+		
+		for (Vote v : votes)
+		{
+			if (biggestVote == null)
+			{
+				biggestVote = v;
+				continue;
+			}
+			
+			if (v.numOfVotes > biggestVote.numOfVotes)
+			{
+				biggestVote = v;
+			}
+		} 
+		
+		GetPlayerByName(biggestVote.identifier).Killed();
+		Broadcast("executed;" + GetPlayerByName(biggestVote.identifier).playerName);
+	}
+	
+	private boolean CheckWin()
+	{
+		int numOfWerewolfes = 0;
+		int numOfVillagers = 0;
+		for (Player ply : players)
+		{
+			if (ply.role == Player.PlayerRole.werewolf)
+			{
+				if (ply.isAlive)
+					numOfWerewolfes++;
+			}
+			else if(ply.isAlive)
+			{
+				numOfVillagers++;
+			}
+		}
+		
+		if (numOfWerewolfes == 0)
+		{
+			Broadcast("win;villager");
+			return true;
+		}
+		else if (numOfVillagers == 0)
+		{
+			Broadcast("win;werewolf");
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public void Broadcast(String msg)
 	{
 		for(Player player : players)
 		{
 			player.SendMessage(msg);
+		}
+	}
+	
+	public void Broadcast(String msg, Boolean dead)
+	{
+		for(Player player : players)
+		{
+			if (!dead && player.isAlive)
+			{
+				player.SendMessage(msg);
+			}
+			else if (dead)
+			{
+				player.SendMessage(msg);
+			}
 		}
 	}
 	
@@ -151,12 +272,11 @@ public class GameManager {
 	public void KillPlayer(String name)
 	{
 		Player ply = GetPlayerByName(name);
-		if (ply == null)
+		if (ply == null || killedPlayers.contains(ply))
 		{
 			return;
 		}
-		
-		ply.Killed();
+		killedPlayers.add(ply);
 	}
 	
 	public List<Player> GetPlayersByRole(PlayerRole role)
