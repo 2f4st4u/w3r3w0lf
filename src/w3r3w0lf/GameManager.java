@@ -59,6 +59,14 @@ public class GameManager {
 	{
 		round++;
 		
+		if (round == 1)
+		{
+			if (GetPlayerByRole(PlayerRole.armor) != null)
+			{
+				GetPlayerByRole(PlayerRole.armor).TurnStart();
+			}
+		}
+		
 		Werewolves();
 		OnNightEnd();
 		DayVote();
@@ -66,7 +74,6 @@ public class GameManager {
 		{
 			NextRound();
 		}
-		
 	}
 
 	private void Werewolves()
@@ -269,12 +276,28 @@ public class GameManager {
 		return null;
 	}
 	
+	public Player GetPlayerByRole(PlayerRole role)
+	{
+		for (Player ply : players)
+		{
+			if (ply.role == role)
+			{
+				return ply;
+			}
+		}
+		return null;
+	}
+	
 	public void KillPlayer(String name)
 	{
 		Player ply = GetPlayerByName(name);
 		if (ply == null || killedPlayers.contains(ply))
 		{
 			return;
+		}
+		if (ply.lover != null)
+		{
+			killedPlayers.add(ply.lover);
 		}
 		killedPlayers.add(ply);
 	}

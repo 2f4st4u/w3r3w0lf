@@ -14,6 +14,7 @@ public class Player implements Runnable {
 	PlayerRole role;
 	GameManager manager;
 	String vote;
+	Player lover;
 
 	public enum PlayerRole {
 		none, villager, werewolf, witch, armor, girl, hunter, seer
