@@ -2,10 +2,8 @@ package w3r3w0lf;
 
 import java.net.Socket;
 
-import w3r3w0lf.Player.PlayerRole;
-
 public class Amor extends Player {
-	
+
 	public Amor(Socket sock, String name, PlayerRole role, GameManager manager) {
 		super(sock, name, role, manager);
 	}
