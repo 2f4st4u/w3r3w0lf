@@ -14,8 +14,28 @@ public class LobbyListener implements Runnable {
 			try {
 				Socket client = manager.serverSocket.accept();
 				//client.setSoTimeout(2000);
-				System.out.print("Client connected!\n");
+				
 				String name = new BufferedReader(new InputStreamReader(client.getInputStream())).readLine();
+				Boolean disconnect = false;
+				for(LobbyClient cl : manager.connectedClients)
+				{
+					if (cl.playerName.equals(name))
+					{
+						new LobbyClient(client, name).SendMessage("disconnect;Name already exists!");
+						client.close();
+						disconnect = true;
+						break;
+					}
+					
+					cl.SendMessage("playerJoined;" + cl.playerName);
+				}
+				
+				if (disconnect)
+				{
+					continue;
+				}
+				
+				System.out.print("Client connected!\n");
 				System.out.print("Name: " + name + "\n");
 				manager.connectedClients.add(new LobbyClient(client, name));
 				

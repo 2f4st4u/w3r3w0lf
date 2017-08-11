@@ -54,6 +54,8 @@ public class Client implements Runnable {
 			OnServerStop();
 		} else if (msg.equals("startgame")) {
 			OnStartGame();
+		} else if (msg.startsWith("disconnect;")) {
+			OnDisconnect(msg.replaceFirst("disconnect;", ""));
 		} else if (msg.startsWith("role;")) {
 			OnRoleAssign(Player.PlayerRole.valueOf(msg.replaceFirst("role;", "")));
 		} else if (msg.startsWith("round;")) {
@@ -249,5 +251,10 @@ public class Client implements Runnable {
 	private void OnPlayerJoined(String name)
 	{
 		players.add(name);
+	}
+	
+	private void OnDisconnect(String msg)
+	{
+		System.out.print("Disconnect: " + msg + "\n");
 	}
 }
