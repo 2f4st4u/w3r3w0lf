@@ -13,6 +13,7 @@ public class Seer extends Player {
 		SendMessage("seer;whoWantToSee");
 		String SeerWhoWantToSee = GetMessage();
 		if (!manager.PlayerExists(SeerWhoWantToSee)) {
+			SendMessage("Invalid name");
 			return;
 		}
 		if (manager.GetPlayerByName(SeerWhoWantToSee).role.name().equals("werewolf")) {
