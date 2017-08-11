@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1080.0" prefWidth="1920.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="1080.0" prefWidth="1920.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="w3r3w0lf.ExpController">
    <children>
       <ImageView fitHeight="1113.0" fitWidth="2514.0" layoutX="-5.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Village%20by%20Night.jpg" />
+            <Image url="@../../../../../Village%20by%20Night.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="-18.0" layoutY="330.0" prefHeight="640.0" prefWidth="1958.0" style="-fx-background-color: black; -fx-opacity: 50%;" />
@@ -34,7 +34,7 @@
             <Font name="October Crow" size="59.0" />
          </font>
       </Label>
-      <Button fx:id="btn_joinGame" layoutX="1351.0" layoutY="468.0" mnemonicParsing="false" prefHeight="144.0" prefWidth="428.0" style="-fx-background-color: black; -fx-border-color: red;" text="Spiel beitreten" textAlignment="CENTER" textFill="RED">
+      <Button fx:id="btn_joinGame" layoutX="1351.0" layoutY="468.0" mnemonicParsing="false" onAction="#mjoingame" prefHeight="144.0" prefWidth="428.0" style="-fx-background-color: black; -fx-border-color: red;" text="Spiel beitreten" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="October Crow" size="54.0" />
          </font>
@@ -54,7 +54,7 @@
             <Font name="October Crow" size="59.0" />
          </font>
       </Label>
-      <Button fx:id="btn_createGame" layoutX="1351.0" layoutY="734.0" mnemonicParsing="false" prefHeight="144.0" prefWidth="428.0" style="-fx-background-color: black; -fx-border-color: red;" text="Spiel erstellen" textAlignment="CENTER" textFill="RED">
+      <Button fx:id="btn_createGame" layoutX="1351.0" layoutY="734.0" mnemonicParsing="false" onAction="#mhostgame" prefHeight="144.0" prefWidth="428.0" style="-fx-background-color: black; -fx-border-color: red;" text="Spiel erstellen" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="October Crow" size="54.0" />
          </font>
