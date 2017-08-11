@@ -61,6 +61,11 @@ public class LobbyManager {
 			client.SendMessage("startgame");
 		}
 		
+		for (int i = 0; i <= connectedClients.size() - roles.size(); i++)
+		{
+			roles.add(PlayerRole.villager);
+		}
+		
 		manager = new GameManager();
 		manager.Initialize(connectedClients, roles);
 		manager.StartGame();

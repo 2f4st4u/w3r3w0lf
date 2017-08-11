@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Player implements Runnable {
 	// Steuerung + A, Steuerung + Shift + F = Einrücken
-	boolean isAlive;
+	boolean isAlive = true;
 	Socket playerSocket;
 	String playerName;
 	PlayerRole role;
@@ -17,7 +17,7 @@ public class Player implements Runnable {
 	Player lover;
 
 	public enum PlayerRole {
-		none, villager, werewolf, witch, armor, girl, hunter, seer
+		none, villager, werewolf, witch, amor, girl, hunter, seer
 	}
 	
 	public Player(Socket sock, String name, PlayerRole role, GameManager manager)
@@ -52,14 +52,21 @@ public class Player implements Runnable {
 		SendMessage("turnend");
 	}
 	
-	public void Killed()
+	public void Killed(String reason)
 	{
+		if (!this.isAlive)
+		{
+			return;
+		}
+		
 		this.isAlive = false;
-		SendMessage("killed");
+		manager.Broadcast("killed;" + this.playerName + ";" + reason);
 	}
 	
 	public void Vote()
 	{
+		this.vote = null;
+		
 		if (!isAlive)
 		{
 			return;

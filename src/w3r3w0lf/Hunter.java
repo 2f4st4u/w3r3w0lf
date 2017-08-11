@@ -9,19 +9,15 @@ public class Hunter extends Player {
 	}
 
 	@Override
-	public void TurnStart() {
+	public void Killed(String reason)
+	{
+		super.Killed(reason);
+		
 		SendMessage("hunter;selectTarget");
 		String response = GetMessage();
 		if (!manager.PlayerExists(response)) {
 			return;
 		}
-
-	}
-
-	@Override
-	public void Killed()
-	{
-		super.Killed();
-		SendMessage("hunter;selectTarget");
+		manager.GetPlayerByName(response).Killed(" was shot by " + this.playerName);
 	}
 }

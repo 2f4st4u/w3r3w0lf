@@ -39,7 +39,8 @@ public static void main(String[] args) throws IOException
 
 				List<Player.PlayerRole> roles = new ArrayList<Player.PlayerRole>();
 				roles.add(Player.PlayerRole.werewolf);
-				roles.add(Player.PlayerRole.werewolf);
+				roles.add(Player.PlayerRole.villager);
+				roles.add(Player.PlayerRole.witch);
 				
 				lobbyManager.StartGame(roles);
 			}
@@ -73,21 +74,20 @@ public static void main(String[] args) throws IOException
 		
 		Client player = new Client();
 		player.Connect(InetAddress.getByName("localhost"), 1337, name);
-		new Thread(player).start();
-		scan.nextLine();
+		player.run();
 		scan.close();
 		System.exit(0);
 	}
 	scan.close();
 	System.out.println("Das Dorf schläft ein.....\n");
-	
 	launch(args);
-	
 	System.exit(0);
 }
 
-@Override	
+	@Override	
 	public void start(Stage arg0) throws Exception {
+		File file = new File(".");
+		System.out.println(file.getAbsolutePath());
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_start.fxml"));
 	    Scene sc = new Scene(loader.load());
 		ExpController c = new ExpController();
