@@ -78,27 +78,8 @@ public class IngameController {
 	@FXML
 	private Label label_header;
 	
-	public IngameController() {
-		data = FXCollections.observableArrayList(b);
-	}
-
-	@FXML
-	void btn_ingame_accept(ActionEvent event) {
 	
-	}
-
-	@FXML
-	void list_players(ActionEvent event) {
-		
-	}
 	
-	@FXML
-	public void handleMouseClick(){
-		Button b = new Button();
-		data.add(b);
-		b.setText("Debug Button 1");
-		list_players.setItems(data);
-		
-	}
+	
 
 }
