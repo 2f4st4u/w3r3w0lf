@@ -80,9 +80,7 @@ public static void main(String[] args) throws IOException
 	}
 	scan.close();
 	System.out.println("Das Dorf schläft ein.....\n");
-	
 	launch(args);
-	
 	System.exit(0);
 }
 
