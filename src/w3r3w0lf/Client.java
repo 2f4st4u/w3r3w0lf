@@ -13,6 +13,7 @@ public class Client implements Runnable {
 	Socket serverSocket;
 	Player.PlayerRole role;
 	String playerName;
+	String serverName;
 	Scanner scan = new Scanner(System.in);
 	List<String> players = new ArrayList<String>();
 
@@ -52,8 +53,12 @@ public class Client implements Runnable {
 			SendMessage("pong");
 		} else if (msg.equals("serverstop")) {
 			OnServerStop();
-		} else if (msg.equals("startgame")) {
-			OnStartGame();
+		} else if (msg.equals("startgame;")) {
+			OnServerName(msg.replaceFirst("startgame;", ""));
+		} else if (msg.startsWith("servername;")) {
+				OnStartGame();
+		} else if (msg.startsWith("disconnect;")) {
+			OnDisconnect(msg.replaceFirst("disconnect;", ""));
 		} else if (msg.startsWith("role;")) {
 			OnRoleAssign(Player.PlayerRole.valueOf(msg.replaceFirst("role;", "")));
 		} else if (msg.startsWith("round;")) {
@@ -249,5 +254,15 @@ public class Client implements Runnable {
 	private void OnPlayerJoined(String name)
 	{
 		players.add(name);
+	}
+	
+	private void OnDisconnect(String msg)
+	{
+		System.out.print("Disconnect: " + msg + "\n");
+	}
+	
+	private void OnServerName(String name)
+	{
+		serverName = name;
 	}
 }

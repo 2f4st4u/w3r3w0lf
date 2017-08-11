@@ -2,6 +2,7 @@ package w3r3w0lf;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,8 +78,14 @@ public class ExpController  {
 		stage1.close();
 		
 		Client player = new Client();
-		player.Connect(InetAddress.getByName(tbox_ipadress.textProperty()), 1337,tbox_playername.textProperty() );
-		player.run();
+		try {
+			player.Connect(InetAddress.getByName(tbox_ipadress.textProperty().get()), 1337,tbox_playername.textProperty().get() );
+			player.run();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
     	
     }
 

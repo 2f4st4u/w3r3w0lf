@@ -4,9 +4,9 @@ import java.util.*;
 import w3r3w0lf.Player.PlayerRole;
 
 public class GameManager {
-	List<PlayerRole> availableRoles;
-	List<Player> players;
-	List<Player> killedPlayers;
+	public List<PlayerRole> availableRoles;
+	public List<Player> players;
+	public List<Player> killedPlayers;
 	int round = 0;
 	
 	public void Initialize(List<LobbyClient> clients, List<PlayerRole> roles)
@@ -56,14 +56,6 @@ public class GameManager {
 		for(Player player : players)
 		{
 			player.SendMessage("role;" + player.role);
-			
-			for (Player ply : players)
-			{
-				if (ply != player) 
-				{
-					player.SendMessage("playerJoined;" + ply.playerName);
-				}
-			}
 		}
 		
 		NextRound();
@@ -81,19 +73,24 @@ public class GameManager {
 				Broadcast("turn;amor");
 				GetPlayerByRole(PlayerRole.amor).TurnStart();
 			}
-			if (GetPlayerByRole(PlayerRole.seer) != null)
-			{
-				Broadcast("turn;seer");
-				GetPlayerByRole(PlayerRole.seer).TurnStart();
-			}
-			if (GetPlayerByRole(PlayerRole.witch) != null)
-			{
-				Broadcast("turn;witch");
-				GetPlayerByRole(PlayerRole.witch).TurnStart();
-			}
+		}
+		
+		if (CheckWin())
+		{
+			return;
 		}
 		
 		Werewolves();
+		if (GetPlayerByRole(PlayerRole.seer) != null)
+		{
+			Broadcast("turn;seer");
+			GetPlayerByRole(PlayerRole.seer).TurnStart();
+		}
+		if (GetPlayerByRole(PlayerRole.witch) != null)
+		{
+			Broadcast("turn;witch");
+			GetPlayerByRole(PlayerRole.witch).TurnStart();
+		}
 		OnNightEnd();
 		if (CheckWin())
 		{
@@ -117,17 +114,16 @@ public class GameManager {
 		
 		for (Player ply : GetPlayersByRole(Player.PlayerRole.werewolf))
 		{
-			Werewolf werewolf = (Werewolf)ply;
-			werewolf.TurnStart();
+			ply.TurnStart();
 			Boolean voted = false;
 			for (Vote v : votes)
 			{
-				if (werewolf.vote == null || werewolf.vote.equals(""))
+				if (ply.vote == null || ply.vote.equals(""))
 				{
 					break;
 				}
 				
-				if (v.identifier.equals(werewolf.vote))
+				if (v.identifier.equals(ply.vote))
 				{
 					v.numOfVotes++;
 					voted = true;
@@ -136,7 +132,7 @@ public class GameManager {
 			}
 			if (!voted)
 			{
-				votes.add(new Vote(werewolf.vote));
+				votes.add(new Vote(ply.vote));
 			}
 		}
 		
@@ -341,13 +337,9 @@ public class GameManager {
 	public void KillPlayer(String name)
 	{
 		Player ply = GetPlayerByName(name);
-		if (ply == null || killedPlayers.contains(ply))
+		if (ply == null || killedPlayers.contains(ply) || !ply.isAlive)
 		{
 			return;
-		}
-		if (ply.lover != null)
-		{
-			killedPlayers.add(ply.lover);
 		}
 		killedPlayers.add(ply);
 	}
