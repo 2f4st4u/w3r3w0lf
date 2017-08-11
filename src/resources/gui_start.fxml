@@ -6,9 +6,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.collections.FXCollections ?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1080.0" prefWidth="1920.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="1080.0" prefWidth="1920.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IngameController">
    <children>
       <ImageView fitHeight="1113.0" fitWidth="2514.0" layoutX="-5.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
          <image>

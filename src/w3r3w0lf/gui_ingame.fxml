@@ -8,21 +8,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="w3r3w0lf.IngameController">
    <children>
       <ImageView fx:id="img_background" fitHeight="1090.0" fitWidth="2003.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Village.jpg" />
+            <Image url="@../../../Village%2520by%2520Night%5B1%5D.jpg" />
          </image>
       </ImageView>
       <ListView fx:id="list_log" layoutX="1514.0" layoutY="-19.0" prefHeight="1111.0" prefWidth="412.0" style="-fx-opacity: 40%; -fx-background-color: black;" />
-      <ListView fx:id="list_players" layoutY="-1.0" prefHeight="1096.0" prefWidth="410.0" style="-fx-opacity: 50%; -fx-background-color: black;" />
+      <ListView fx:id="list_players" layoutX="-45.0" layoutY="-57.0" prefHeight="1096.0" prefWidth="410.0" style="-fx-opacity: 50%; -fx-background-color: black;" />
       <ImageView fx:id="img_playercard" fitHeight="108.0" fitWidth="108.0" layoutX="1389.0" layoutY="895.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Karten/Basic/Bürger.JPG" />
+            <Image url="@../../../kaart_achterkant.png" />
          </image>
       </ImageView>
-      <Button fx:id="btn_accept" layoutX="1557.0" layoutY="827.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="336.0" style="-fx-background-color: black; -fx-border-color: green;" text="Bestätigen" textFill="WHITE">
+      <Button fx:id="btn_accept" layoutX="1557.0" layoutY="827.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="336.0" style="-fx-background-color: black; -fx-border-color: green;" text="Bestätigen" textFill="WHITE"  onAction="#handleMouseClick">
          <font>
             <Font size="45.0" />
          </font>
