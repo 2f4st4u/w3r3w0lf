@@ -86,11 +86,13 @@ public static void main(String[] args) throws IOException
 	System.exit(0);
 }
 
-@Override	
+	@Override	
 	public void start(Stage arg0) throws Exception {
-	    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_start.fxml"));
+		File file = new File(".");
+		System.out.println(file.getAbsolutePath());
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_ingame.fxml"));
 	    Scene sc = new Scene(loader.load());
-		ExpController c = new ExpController();
+		IngameController c = new IngameController();
 		arg0.setScene(sc);
 		arg0.show();
 	}
