@@ -22,7 +22,7 @@
             <Image url="@../../../kaart_achterkant.png" />
          </image>
       </ImageView>
-      <Button fx:id="btn_accept" layoutX="1557.0" layoutY="827.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="336.0" style="-fx-background-color: black; -fx-border-color: green;" text="Bestätigen" textFill="WHITE">
+      <Button fx:id="btn_accept" layoutX="1557.0" layoutY="827.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="336.0" style="-fx-background-color: black; -fx-border-color: green;" text="Bestätigen" textFill="WHITE"  onAction="#handleMouseClick">
          <font>
             <Font size="45.0" />
          </font>

@@ -53,6 +53,14 @@ public class LobbyManager {
 		}
 	}
 	
+	public void ChangeName(String name)
+	{
+		for (LobbyClient client : connectedClients)
+		{
+			client.SendMessage("servername;" + name);
+		}
+	}
+	
 	public void StartGame(List<PlayerRole> roles)
 	{
 		for (Iterator<LobbyClient> i = connectedClients.iterator(); i.hasNext();)
