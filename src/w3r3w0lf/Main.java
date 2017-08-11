@@ -88,9 +88,9 @@ public static void main(String[] args) throws IOException
 	public void start(Stage arg0) throws Exception {
 		File file = new File(".");
 		System.out.println(file.getAbsolutePath());
-	    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_ingame.fxml"));
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\resources\\gui_start.fxml"));
 	    Scene sc = new Scene(loader.load());
-		IngameController c = new IngameController();
+		ExpController c = new ExpController();
 		arg0.setScene(sc);
 		arg0.show();
 	}
