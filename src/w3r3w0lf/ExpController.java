@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 public class ExpController  {
 
+	public Client player;
+	public LobbyManager lobbyManager;
+	
     @FXML
     private TextField tbox_playername;
 
@@ -47,7 +50,7 @@ public class ExpController  {
     			Stage stage1= (Stage) btn_joinGame.getScene().getWindow();
     			stage1.close();	
     			
-    			LobbyManager lobbyManager = new LobbyManager();
+    			lobbyManager = new LobbyManager();
     			try {
 					lobbyManager.Initialize(1337);
 				} catch (IOException e) {
@@ -77,7 +80,7 @@ public class ExpController  {
 		Stage stage1= (Stage) btn_joinGame.getScene().getWindow();
 		stage1.close();
 		
-		Client player = new Client();
+		player = new Client();
 		try {
 			player.Connect(InetAddress.getByName(tbox_ipadress.textProperty().get()), 1337,tbox_playername.textProperty().get() );
 			player.run();
