@@ -1,6 +1,7 @@
 package w3r3w0lf;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,15 @@ public class ExpController  {
     			
     			Stage stage1= (Stage) btn_joinGame.getScene().getWindow();
     			stage1.close();	
+    			
+    			LobbyManager lobbyManager = new LobbyManager();
+    			try {
+					lobbyManager.Initialize(1337);
+				} catch (IOException e) {
+					return;
+				}
+    			
+    			
     		}                 
     	
     
@@ -65,6 +75,10 @@ public class ExpController  {
 		
 		Stage stage1= (Stage) btn_joinGame.getScene().getWindow();
 		stage1.close();
+		
+		Client player = new Client();
+		player.Connect(InetAddress.getByName(tbox_ipadress.textProperty()), 1337,tbox_playername.textProperty() );
+		player.run();
     	
     }
 

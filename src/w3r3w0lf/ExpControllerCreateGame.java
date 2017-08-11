@@ -1,6 +1,7 @@
 package w3r3w0lf;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,6 +78,11 @@ public class ExpControllerCreateGame {
 			ExpControllerIngame e = new ExpControllerIngame();
 			stage.setScene(scrga);
 			stage.show();
+			
+			Stage stage1= (Stage) btn_start.getScene().getWindow();
+			stage1.close();
+			
+
 	    	
 	    }
 
